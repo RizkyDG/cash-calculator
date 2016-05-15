@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" href="icon.png">
+    <title>💰🔑</title>
+    <style>
+    
+      .flex-row {
+        display:flex;
+        flex-flow:row nowrap;
+      }
+      .flex-row > div {
+        flex-basis:50%;
+        flex-grow:1;
+          display:flex;
+        align-items:center;
+      }
+      .flex-row:first-of-type > div {
+        display:flex;
+        justify-content: center;
+      }
+      .flex-row:not(:first-of-type):not(:last-of-type) > div:first-of-type {
+        font-size:1.5em;
+      }
+
+      input[type="tel"]{
+        width:90px;
+        font-size:2em;
+        text-align:center;
+        border:none;
+      }
+
+      #pennies {
+        border-bottom: 2px dashed rgba(213,43,30,0.4);
+        color:rgba(213,43,30,1);
+      }
+
+      #nickels {
+        border-bottom: 2px dashed rgba(4,92,162,0.4);
+        color:rgba(4,92,162,1);
+      }
+
+      #dimes {
+        border-bottom: 2px dashed rgba(122,191,87,0.4);
+        color:rgba(122,191,87,1);
+      }
+
+      #quarters {
+        border-bottom: 2px dashed rgba(255,139,20,0.4);
+        color:rgba(255,139,20,1);
+      }
+
+      #dollars, #twodollars, #fives, #tens, #twenties, #other {
+        border-bottom: 2px dashed #CCC;
+        color:#000;
+      }
+
+      .subtotals, #total-change-fund {
+        font-size:2em;
+      }
+
+      .subtotals:before, #total-change-fund:before {
+        display:inline-block;
+        content:"$";
+      }
+
+      .total {
+        margin-top:1.5em;
+        border-top: solid 2px #000;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div class="flex">
+        
+      <div class="flex-row">
+
+        <div>Denomination</div>
+        <div>Rolls/Amount</div>
+        <div>Subtotals</div>
+
+      </div>
+
+      <div class="flex-row">
+
+        <div>$0.01</div>
+        <div><input id="pennies" onchange="document.getElementById('pennies-subtotal').innerHTML=this.value*.5;total();" type="tel"></div>
+        <div id="pennies-subtotal" class="subtotals"></div>
+
+      </div> 
+
+      <div class="flex-row">
+
+        <div>$0.05</div>
+        <div><input id="nickels" onchange="document.getElementById('nickels-subtotal').innerHTML=this.value*2;total();" type="tel"></div>
+        <div id="nickels-subtotal" class="subtotals"></div>
+
+      </div> 
+
+      <div class="flex-row">
+
+        <div>$0.10</div>
+        <div><input id="dimes" onchange="document.getElementById('dimes-subtotal').innerHTML=this.value*5;total();" type="tel"></div>
+        <div id="dimes-subtotal" class="subtotals"></div>
+
+      </div> 
+
+      <div class="flex-row">
+
+        <div>$0.25</div>
+        <div><input id="quarters" onchange="document.getElementById('quarters-subtotal').innerHTML=this.value*10;total();" type="tel"></div>
+        <div id="quarters-subtotal" class="subtotals"></div>
+
+      </div>
+
+      <div class="flex-row">
+
+        <div>$1.00</div>
+        <div><input id="dollars" onchange="document.getElementById('dollars-subtotal').innerHTML=this.value;total();" type="tel"></div>
+        <div id="dollars-subtotal" class="subtotals"></div>
+
+      </div> 
+
+      <div class="flex-row">
+
+        <div>$2.00</div>
+        <div><input id="twodollars" onchange="document.getElementById('twodollars-subtotal').innerHTML=this.value;total();" type="tel"></div>
+        <div id="twodollars-subtotal" class="subtotals"></div>
+
+      </div> 
+
+      <div class="flex-row">
+
+        <div>$5.00</div>
+        <div><input id="fives" onchange="document.getElementById('fives-subtotal').innerHTML=this.value;total();" type="tel"></div>
+        <div id="fives-subtotal" class="subtotals"></div>
+
+      </div> 
+
+      <div class="flex-row">
+
+        <div>$10.00</div>
+        <div><input id="tens" onchange="document.getElementById('tens-subtotal').innerHTML=this.value;total();" type="tel"></div>
+        <div id="tens-subtotal" class="subtotals"></div>
+
+      </div> 
+
+      <div class="flex-row">
+
+        <div>$20.00</div>
+        <div><input id="twenties" onchange="document.getElementById('twenties-subtotal').innerHTML=this.value;total();" type="tel"></div>
+        <div id="twenties-subtotal" class="subtotals"></div>
+
+      </div> 
+
+      <div class="flex-row">
+
+        <div>$ Other </div>
+        <div><input id="other" onchange="document.getElementById('other-subtotal').innerHTML=this.value;total();" type="tel"></div>
+        <div id="other-subtotal" class="subtotals"></div>
+
+      </div>
+
+      <div class="flex-row total">
+
+        <div>Total Change Fund</div>
+        <div></div>
+        <div id="total-change-fund"></div>
+
+      </div>
+        
+    </div>
+    <script>
+
+      function total() {
+        var pennies = +document.getElementById("pennies").value * .5;
+        var nickels = +document.getElementById("nickels").value * 2;
+        var dimes = +document.getElementById("dimes").value * 5;
+        var quarters = +document.getElementById("quarters").value * 10;
+        var ones = +document.getElementById("dollars").value;
+        var twos = +document.getElementById("twodollars").value;
+        var fives = +document.getElementById("fives").value;
+        var tens = +document.getElementById("tens").value;
+        var twenties = +document.getElementById("twenties").value;
+        var other = +document.getElementById("other").value;
+        var output = document.getElementById("total-change-fund");
+
+        var total = pennies + nickels + dimes + quarters + ones + twos + fives + tens + twenties + other;
+        console.log(total);
+        output.innerHTML = total;
+      }
+
+      setTimeout(function() { document.getElementById("pennies").focus(); }, 500);
+
+    </script>
+  </body>
+</html>
