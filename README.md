@@ -1,5 +1,5 @@
 #Cash Calculator
-Created to help me quickly count the safe in my role as a Shift Supervisor at Starbucks.
+Created to help me quickly count the safe in my role as a Shift Supervisor at Starbucks. This was designed to be used only on small screens like the iPhone.
 
 I made a thing to make it easier to count money. It works like this:
 
